@@ -148,13 +148,4 @@
 - Looking for potential solution for [front-end](https://www.the-art-of-web.com/javascript/doublesubmit/) and back-end 
 - sometimes when you change env, you might need to refresh your php artisan serve
 
-### Tmp records
 
-```
-.env
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=
-DB_USERNAME=
-DB_PASSWORD=
-```
