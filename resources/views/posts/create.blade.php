@@ -39,10 +39,9 @@
                 </div>
     
                 <div class="row pt-4">
-                    <input type="submit" name="submit_data" value="SUBMIT"/>
-                    {{-- <button class="btn btn-primary">
+                    <button class="btn btn-primary">
                         Add New Post
-                    </button> --}}
+                    </button>
                 </div>
             </div>
         </div>
