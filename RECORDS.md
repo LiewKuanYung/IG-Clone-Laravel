@@ -40,7 +40,8 @@
 - Explanation of the codes is inside ProfilesController
 8. **(1:10:20)** Adding the Profiles Mode, Migration and Table
 - **Eloquent** is what laravel calls the database layer of the framework. Implementation that fecth quries, and database agnostic (can use diff database platform with the same database query)
-- command used is `php artisan make:model Profile -m
+- command used is for example `php artisan make:model Profile`, make a model of Profile.
+- You can use `php artisan make:model Profile -m` too, the `-m` will automatically help you create a migration file
 - Manipulate database inside **Tinker** to test Profile model
 ```
 >>> $profile = new \App\Models\Profile();
@@ -55,24 +56,35 @@
 => true
 >>> $profile->user
 => App\Models\User {#4140
-     id: "1",
-     name: "Test user",
-     email: "test@gmail.com",
-     username: "Test username",
-     email_verified_at: null,
-     #password: "$2y$10$l.6j2.ZaQOyKzr1gYBB3JumH9pefemwDmyAl8sXFJ5AwcpvbCdHcG",
-     #remember_token: null,
-     created_at: "2021-07-07 12:31:25",
-     updated_at: "2021-07-07 12:31:25",
+     # Will display user's data
    }
+```
+- Your modal table needs to have foreign key, 
+```
+$table->unsignedBigInteger('otherTable_id');
+After adding the attribute, at the bottom add this
+$table->index('otherTable_id');
+This means that the 'otherTable_id' is foreign key
 ```
 8. **(1:17:30)** Adding Eloquent Relationships
 - Read more about [relationships in Eloquent](https://laravel.com/docs/8.x/eloquent-relationships)
-- Example of accessing data through relationship
+- Example, *Profile* to *User* is one to one.
+  To connect relationship, we need to use some convention methods
+  Inside *Profile* model, there will be a function call *user()*
+```
+public function user()
+{
+  return $this->belongsTo(User::class);
+}
+```
+- *User* will have the same thing, i.e., *profile()*
+  Following conventional naming will avoid the needs to extra config
+- Then you can try access data through relationship in Tinker
 ```
 >>> $user = App\Models\User::find(1);
 >>> $user->profile
 ```
+- Also, casscading is possible in Eloquent, for example if user is deleted, the profile will auto deleted as well
 9. Saving changes in database
 ```
 >>> $user->profile->url = 'www.kuanyung.com';
@@ -117,6 +129,7 @@
 - Many to many relationship (need to create a pivot table, like a bridge in relational database).
 - First, we don't really need a new model, we need to create migration and use existing data field, use `php artisan make:migration creates_profile_user_pivot_table --create  profile_user` (naming convention, follow alphabetic order, P first then U (Profile User), and everything is lower case, then add a _ in between)
 - After created migration and defined the data field, add m-2-m relationship into User.php and Profile.php
+- More aboout [pivot table](https://gist.github.com/Braunson/8b18b7fc7efd0890136ce5e46452ec72)
 - Laravel toggle feature (if you `console.log(response.data);` and click the follow button a few times, you will find out that the toggle will attach / detach depends on whether you followed or not followed that person)
 - [migrate:fresh specific table](https://stackoverflow.com/questions/45473624/laravel-5-4-specific-table-migration)
 - refresh tinker using $attribute->fresh()->data 
@@ -147,5 +160,16 @@
 - If you accidentally clicked the post button multiple times when creating the post, the server will get hit multiple times and in turn storing multiple samve value/data.
 - Looking for potential solution for [front-end](https://www.the-art-of-web.com/javascript/doublesubmit/) and back-end 
 - sometimes when you change env, you might need to refresh your php artisan serve
+2. An stdClass cannot convert to int (or other data type) error 
+- Convert the array of class, into an actual array
+```
+$id = DB::select('select id from warehouses order by id desc limit 1');
+// without this part, you won't be able to use to data inside $id
+$currentMaxId = (array)$id[0]; 
+// Now you can use math operation, treat it as PHP array
+$newId += $currentMaxId['id'];
+```
+3. Understand the difference between **has**Many and **belongsTo**Many in eloquent relationship. Here's a [simple explanation](https://stackoverflow.com/questions/30058949/should-i-use-belongsto-or-hasone-in-laravel/30058999) and a [explanation with codes](https://stackoverflow.com/questions/37582848/what-is-the-difference-between-belongsto-and-hasone-in-laravel). Basically the difference is **has** is the one that has othe **belongsTo**'s foreign key.
+4. Issues related to routing path but different function, [discussion in laracast](https://laracasts.com/index.php/discuss/channels/laravel/giving-routes-of-different-kinds-with-same-url-the-same-name)
 
 
