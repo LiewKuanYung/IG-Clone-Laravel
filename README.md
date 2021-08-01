@@ -8,4 +8,4 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 ![DEMO](./DEMO-Pict/07-dataStored.png)
 
-This project is a follow along project from [freeCodeCamp](https://www.youtube.com/watch?v=ImtZ5yENzgE), creating an IG Clone. This project covers a Laravel's basics, and some intermediate knowledge i.e., artisan, cache, file storage, database, telescope, and most importantly Eloquent ORM. My learning path is recorded inside [RECORDS.md](./RECORDS.md), and some of the demo pictures are located inside [DEMO-Pict](./DEMO-Pict).
+This project is a follow along project from [freeCodeCamp](https://www.youtube.com/watch?v=ImtZ5yENzgE), creating an IG Clone. This project covers Laravel's basics, and some intermediate knowledge i.e., artisan, cache, file storage, database, pagination, telescope, and most importantly Eloquent ORM. My learning path is recorded inside [RECORDS.md](./RECORDS.md), and some of the demo pictures are located inside [DEMO-Pict](./DEMO-Pict).
